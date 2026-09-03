@@ -1,741 +1,745 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SocialAI — AI Social Media Assistant for Businesses</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-/* --- CSS VARIABLES & RESET --- */
-:root {
---bg-color: #0b0f19;
---card-bg: #111827;
---card-border: #1f293d;
---primary-purple: #8b5cf6;
---primary-blue: #3b82f6;
---accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
---text-main: #f9fafb;
---text-muted: #9ca3af;
---input-bg: #1f2937;
---input-border: #374151;
---radius-lg: 16px;
---radius-md: 8px;
---transition: all 0.3s ease;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialAI — AI Social Media Assistant for Businesses</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --card-border: #1f293d;
+            --primary-purple: #8b5cf6;
+            --primary-blue: #3b82f6;
+            --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --input-bg: #1f2937;
+            --input-border: #374151;
+            --radius-lg: 16px;
+            --radius-md: 8px;
+            --transition: all 0.3s ease;
+        }
 
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-font-family: 'Inter', sans-serif;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
 
-html {
-scroll-behavior: smooth;
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-body {
-background-color: var(--bg-color);
-color: var(--text-main);
-line-height: 1.6;
-overflow-x: hidden;
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-/* --- TYPOGRAPHY & BUTTONS --- */
-h1, h2, h3 {
-font-weight: 800;
-line-height: 1.2;
-}
+        /* --- TYPOGRAPHY & BUTTONS --- */
+        h1, h2, h3 {
+            font-weight: 800;
+            line-height: 1.2;
+        }
 
-.gradient-text {
-background: var(--accent-gradient);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
+        .gradient-text {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.btn {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-padding: 0.8rem 1.6rem;
-font-size: 1rem;
-font-weight: 600;
-border-radius: var(--radius-md);
-border: none;
-cursor: pointer;
-transition: var(--transition);
-text-decoration: none;
-}
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.6rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
 
-.btn-primary {
-background: var(--accent-gradient);
-color: #fff;
-box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
-}
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+        }
 
-.btn-primary:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
-}
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+        }
 
-.btn-secondary {
-background: rgba(255, 255, 255, 0.05);
-color: var(--text-main);
-border: 1px solid var(--card-border);
-}
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+        }
 
-.btn-secondary:hover {
-background: rgba(255, 255, 255, 0.1);
-border-color: var(--primary-purple);
-}
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-purple);
+        }
 
-.container {
-max-width: 1200px;
-margin: 0 auto;
-padding: 0 1.5rem;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
 
-/* --- NAVIGATION --- */
-nav {
-position: fixed;
-top: 0;
-width: 100%;
-background: rgba(11, 15, 25, 0.8);
-backdrop-filter: blur(12px);
-border-bottom: 1px solid var(--card-border);
-z-index: 1000;
-padding: 1rem 0;
-}
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
 
-.nav-container {
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.logo {
-font-size: 1.5rem;
-font-weight: 800;
-letter-spacing: -0.5px;
-}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
 
-.nav-links {
-display: flex;
-gap: 2rem;
-list-style: none;
-}
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-.nav-links a {
-color: var(--text-muted);
-text-decoration: none;
-font-weight: 500;
-transition: var(--transition);
-}
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
 
-.nav-links a:hover {
-color: var(--text-main);
-}
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
 
-/* --- HERO SECTION --- */
-.hero {
-padding: 10rem 0 5rem 0;
-text-align: center;
-position: relative;
-}
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 10rem 0 5rem 0;
+            text-align: center;
+            position: relative;
+        }
 
-.hero::before {
-content: '';
-position: absolute;
-top: 20%;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 400px;
-height: 400px;
-background: var(--accent-gradient);
-opacity: 0.15;
-filter: blur(120px);
-border-radius: 50%;
-z-index: -1;
-}
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: var(--accent-gradient);
+            opacity: 0.15;
+            filter: blur(120px);
+            border-radius: 50%;
+            z-index: -1;
+        }
 
-.hero h1 {
-font-size: 3.5rem;
-margin-bottom: 1.5rem;
-}
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
 
-.hero p {
-font-size: 1.25rem;
-color: var(--text-muted);
-max-width: 650px;
-margin: 0 auto 2.5rem auto;
-}
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2.5rem auto;
+        }
 
-/* --- FEATURES SECTION --- */
-.features {
-padding: 5rem 0;
-}
+        /* --- FEATURES SECTION --- */
+        .features {
+            padding: 5rem 0;
+        }
 
-.section-title {
-text-align: center;
-margin-bottom: 3.5rem;
-}
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
 
-.section-title h2 {
-font-size: 2.5rem;
-margin-bottom: 0.5rem;
-}
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-.section-title p {
-color: var(--text-muted);
-}
+        .section-title p {
+            color: var(--text-muted);
+        }
 
-.features-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-gap: 2rem;
-}
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
 
-.feature-card {
-background: var(--card-bg);
-border: 1px solid var(--card-border);
-padding: 2.5rem;
-border-radius: var(--radius-lg);
-transition: var(--transition);
-}
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            transition: var(--transition);
+        }
 
-.feature-card:hover {
-transform: translateY(-5px);
-border-color: var(--primary-purple);
-}
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-purple);
+        }
 
-.feature-icon {
-font-size: 2.5rem;
-margin-bottom: 1rem;
-}
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
 
-.feature-card h3 {
-font-size: 1.25rem;
-margin-bottom: 0.75rem;
-}
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
 
-.feature-card p {
-color: var(--text-muted);
-font-size: 0.95rem;
-}
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
 
-/* --- APP DASHBOARD / GENERATOR --- */
-.generator-section {
-padding: 5rem 0;
-background: rgba(17, 24, 39, 0.4);
-border-top: 1px solid var(--card-border);
-border-bottom: 1px solid var(--card-border);
-}
+        /* --- APP DASHBOARD / GENERATOR --- */
+        .generator-section {
+            padding: 5rem 0;
+            background: rgba(17, 24, 39, 0.4);
+            border-top: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+        }
 
-.dashboard {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 2.5rem;
-background: var(--card-bg);
-border: 1px solid var(--card-border);
-border-radius: var(--radius-lg);
-padding: 2.5rem;
-box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
 
-.form-group {
-margin-bottom: 1.25rem;
-}
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
 
-.form-row {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 1rem;
-}
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
 
-label {
-display: block;
-font-size: 0.875rem;
-font-weight: 600;
-margin-bottom: 0.5rem;
-color: var(--text-main);
-}
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
 
-input, select, textarea {
-width: 100%;
-padding: 0.75rem 1rem;
-background: var(--input-bg);
-border: 1px solid var(--input-border);
-border-radius: var(--radius-md);
-color: var(--text-main);
-font-size: 0.95rem;
-outline: none;
-transition: var(--transition);
-}
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
 
-input:focus, select:focus, textarea:focus {
-border-color: var(--primary-purple);
-box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
-}
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+        }
 
-.generate-btn {
-width: 100%;
-padding: 1rem;
-font-size: 1.1rem;
-margin-top: 1rem;
-}
+        .generate-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
 
-/* Results Display */
-.results-panel {
-background: var(--bg-color);
-border: 1px solid var(--card-border);
-border-radius: var(--radius-md);
-padding: 1.5rem;
-display: flex;
-flex-direction: column;
-gap: 1.5rem;
-min-height: 400px;
-}
+        /* Results Display */
+        .results-panel {
+            background: var(--bg-color);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            min-height: 400px;
+        }
 
-.results-placeholder {
-margin: auto;
-text-align: center;
-color: var(--text-muted);
-}
+        .results-placeholder {
+            margin: auto;
+            text-align: center;
+            color: var(--text-muted);
+        }
 
-.result-box {
-background: var(--card-bg);
-border: 1px solid var(--card-border);
-border-radius: var(--radius-md);
-padding: 1rem;
-position: relative;
-}
+        .result-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            position: relative;
+        }
 
-.result-box h4 {
-font-size: 0.85rem;
-text-transform: uppercase;
-letter-spacing: 0.5px;
-color: var(--primary-purple);
-margin-bottom: 0.5rem;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
+        .result-box h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--primary-purple);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.copy-btn {
-background: none;
-border: none;
-color: var(--text-muted);
-cursor: pointer;
-font-size: 0.75rem;
-}
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
 
-.copy-btn:hover {
-color: var(--text-main);
-}
+        .copy-btn:hover {
+            color: var(--text-main);
+        }
 
-.result-content {
-font-size: 0.95rem;
-white-space: pre-wrap;
-color: #e5e7eb;
-}
+        .result-content {
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            color: #e5e7eb;
+        }
 
-/* Loading Spinner */
-.spinner {
-display: none;
-width: 40px;
-height: 40px;
-border: 4px solid rgba(255,255,255,0.1);
-border-left-color: var(--primary-purple);
-border-radius: 50%;
-animation: spin 1s linear infinite;
-margin: auto;
-}
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-left-color: var(--primary-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: auto;
+        }
 
-@keyframes spin {
-to { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
 
-/* --- PRICING SECTION --- */
-.pricing {
-padding: 5rem 0;
-}
+        /* --- PRICING SECTION --- */
+        .pricing {
+            padding: 5rem 0;
+        }
 
-.pricing-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 2rem;
-align-items: center;
-}
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
 
-.pricing-card {
-background: var(--card-bg);
-border: 1px solid var(--card-border);
-border-radius: var(--radius-lg);
-padding: 2.5rem;
-text-align: center;
-position: relative;
-transition: var(--transition);
-}
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+        }
 
-.pricing-card.popular {
-border-color: var(--primary-purple);
-transform: scale(1.05);
-box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
-}
+        .pricing-card.popular {
+            border-color: var(--primary-purple);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
 
-.badge {
-position: absolute;
-top: -12px;
-left: 50%;
-transform: translateX(-50%);
-background: var(--accent-gradient);
-color: #fff;
-padding: 0.25rem 0.75rem;
-border-radius: 20px;
-font-size: 0.75rem;
-font-weight: 700;
-text-transform: uppercase;
-}
+        .badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-gradient);
+            color: #fff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
 
-.price {
-font-size: 3rem;
-font-weight: 800;
-margin: 1.5rem 0;
-}
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1.5rem 0;
+        }
 
-.price span {
-font-size: 1rem;
-color: var(--text-muted);
-font-weight: 400;
-}
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
 
-.pricing-features {
-list-style: none;
-margin-bottom: 2rem;
-text-align: left;
-}
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
 
-.pricing-features li {
-margin-bottom: 0.75rem;
-color: var(--text-muted);
-font-size: 0.95rem;
-display: flex;
-align-items: center;
-gap: 0.5rem;
-}
+        .pricing-features li {
+            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.pricing-features li::before {
-content: "✓";
-color: var(--primary-purple);
-font-weight: bold;
-}
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--primary-purple);
+            font-weight: bold;
+        }
 
-/* --- FOOTER --- */
-footer {
-border-top: 1px solid var(--card-border);
-padding: 3rem 0;
-text-align: center;
-color: var(--text-muted);
-font-size: 0.9rem;
-}
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
 
-/* --- RESPONSIVE MEDIA QUERIES --- */
-@media (max-width: 900px) {
-.dashboard {
-grid-template-columns: 1fr;
-}
-.hero h1 {
-font-size: 2.5rem;
-}
-.pricing-card.popular {
-transform: scale(1);
-}
-}
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+        }
 
-@media (max-width: 600px) {
-.form-row {
-grid-template-columns: 1fr;
-}
-.nav-links {
-display: none; /* Simplification for mobile view */
-}
-}
-</style>
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-<div class="container nav-container">
-<div class="logo">Social<span class="gradient-text">AI</span></div>
-<ul class="nav-links">
-<li><a href="#features">Features</a></li>
-<li><a href="#generator">Generator</a></li>
-<li><a href="#pricing">Pricing</a></li>
-</ul>
-<a href="#generator" class="btn btn-primary">Try Now</a>
-</div>
-</nav>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">Social<span class="gradient-text">AI</span></div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#generator">Generator</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+            <a href="#generator" class="btn btn-primary">Try Now</a>
+        </div>
+    </nav>
 
-<section class="hero">
-<div class="container">
-<h1>Supercharge Your Socials with <br><span class="gradient-text">Instant AI Content</span></h1>
-<p>Generate captions, viral video ideas, and scripts custom-built for your business brand in seconds.</p>
-<div style="display: flex; gap: 1rem; justify-content: center;">
-<a href="#generator" class="btn btn-primary">Start Generating Free</a>
-<a href="#features" class="btn btn-secondary">Learn More</a>
-</div>
-</div>
-</section>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <h1>Supercharge Your Socials with <br><span class="gradient-text">Instant AI Content</span></h1>
+            <p>Generate captions, viral video ideas, and scripts custom-built for your business brand in seconds.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="#generator" class="btn btn-primary">Start Generating Free</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
 
-<section class="features" id="features">
-<div class="container">
-<div class="section-title">
-<h2>Designed for Growing Brands</h2>
-<p>Everything you need to scale your social media presence without hiring an agency.</p>
-</div>
-<div class="features-grid">
-<div class="feature-card">
-<div class="feature-icon">✨</div>
-<h3>Platform Targeted</h3>
-<p>Tailor tailored strategies specifically built for Instagram, TikTok, or Facebook audiences.</p>
-</div>
-<div class="feature-card">
-<div class="feature-icon">🎬</div>
-<h3>Video Ideas & Scripts</h3>
-<p>Get full video production concepts, visual instructions, and short scripts optimized to go viral.</p>
-</div>
-<div class="feature-card">
-<div class="feature-icon">🎯</div>
-<h3>Tone Matching</h3>
-<p>Specify your brand voice—whether professional, humorous, inspiring, or sales-focused.</p>
-</div>
-</div>
-</div>
-</section>
+    <!-- FEATURES SECTION -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Designed for Growing Brands</h2>
+                <p>Everything you need to scale your social media presence without hiring an agency.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Platform Targeted</h3>
+                    <p>Tailored strategies specifically built for Instagram, TikTok, or Facebook audiences.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Video Ideas & Scripts</h3>
+                    <p>Get full video production concepts, visual instructions, and short scripts optimized to go viral.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Tone Matching</h3>
+                    <p>Specify your brand voice—whether professional, humorous, inspiring, or sales-focused.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="generator-section" id="generator">
-<div class="container">
-<div class="section-title">
-<h2>Try the AI Generator</h2>
-<p>Fill out your business details below and get high-converting social media content instantly.</p>
-</div>
+    <!-- AI GENERATOR DASHBOARD -->
+    <section class="generator-section" id="generator">
+        <div class="container">
+            <div class="section-title">
+                <h2>Try the AI Generator</h2>
+                <p>Fill out your business details below and get high-converting social media content instantly.</p>
+            </div>
 
-<div class="dashboard">
-<form id="ai-form" onsubmit="handleGenerate(event)">
-<div class="form-row">
-<div class="form-group">
-<label for="businessName">Business Name</label>
-<input type="text" id="businessName" placeholder="e.g. Apex Fitness" required>
-</div>
-<div class="form-group">
-<label for="businessType">Type of Business</label>
-<input type="text" id="businessType" placeholder="e.g. Gym / Personal Training" required>
-</div>
-</div>
+            <div class="dashboard">
+                <!-- FORM INPUTS -->
+                <form id="ai-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="businessName">Business Name</label>
+                            <input type="text" id="businessName" placeholder="e.g. Apex Fitness" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="businessType">Type of Business</label>
+                            <input type="text" id="businessType" placeholder="e.g. Gym / Personal Training" required>
+                        </div>
+                    </div>
 
-<div class="form-row">
-<div class="form-group">
-<label for="location">Location</label>
-<input type="text" id="location" placeholder="e.g. London, UK" required>
-</div>
-<div class="form-group">
-<label for="platform">Platform</label>
-<select id="platform">
-<option value="Instagram">Instagram</option>
-<option value="TikTok">TikTok</option>
-<option value="Facebook">Facebook</option>
-</select>
-</div>
-</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="e.g. London, UK" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="platform">Platform</label>
+                            <select id="platform">
+                                <option value="Instagram">Instagram</option>
+                                <option value="TikTok">TikTok</option>
+                                <option value="Facebook">Facebook</option>
+                            </select>
+                        </div>
+                    </div>
 
-<div class="form-group">
-<label for="description">Business Description</label>
-<textarea id="description" rows="3" placeholder="Describe your product or service..." required></textarea>
-</div>
+                    <div class="form-group">
+                        <label for="description">Business Description</label>
+                        <textarea id="description" rows="3" placeholder="Describe your product or service..." required></textarea>
+                    </div>
 
-<div class="form-row">
-<div class="form-group">
-<label for="audience">Target Audience</label>
-<input type="text" id="audience" placeholder="e.g. Busy professionals aged 25-40" required>
-</div>
-<div class="form-group">
-<label for="tone">Tone of Voice</label>
-<select id="tone">
-<option value="Professional">Professional</option>
-<option value="Casual & Friendly">Casual & Friendly</option>
-<option value="Energetic & Bold">Energetic & Bold</option>
-<option value="Witty & Humorous">Witty & Humorous</option>
-</select>
-</div>
-</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="audience">Target Audience</label>
+                            <input type="text" id="audience" placeholder="e.g. Busy professionals aged 25-40" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tone">Tone of Voice</label>
+                            <select id="tone">
+                                <option value="Professional">Professional</option>
+                                <option value="Casual & Friendly">Casual & Friendly</option>
+                                <option value="Energetic & Bold">Energetic & Bold</option>
+                                <option value="Witty & Humorous">Witty & Humorous</option>
+                            </select>
+                        </div>
+                    </div>
 
-<button type="submit" class="btn btn-primary generate-btn">✨ Generate AI Content</button>
-</form>
+                    <button type="submit" class="btn btn-primary generate-btn">✨ Generate AI Content</button>
+                </form>
 
-<div class="results-panel" id="results-panel">
-<div id="placeholder-text" class="results-placeholder">
-<p>👈 Fill out the details and click "Generate AI Content" to see the magic happen.</p>
-</div>
+                <!-- OUTPUT RESULTS -->
+                <div class="results-panel" id="results-panel">
+                    <div id="placeholder-text" class="results-placeholder">
+                        <p>👈 Fill out the details and click "Generate AI Content" to see the magic happen.</p>
+                    </div>
+                    
+                    <div id="loading-spinner" class="spinner"></div>
 
-<div id="loading-spinner" class="spinner"></div>
+                    <div id="output-container" style="display: none; flex-direction: column; gap: 1rem;">
+                        <div class="result-box">
+                            <h4>Social Media Caption <button class="copy-btn" onclick="copyToClipboard('out-caption')">Copy</button></h4>
+                            <div class="result-content" id="out-caption"></div>
+                        </div>
 
-<div id="output-container" style="display: none; flex-direction: column; gap: 1rem;">
-<div class="result-box">
-<h4>Social Media Caption <button class="copy-btn" onclick="copyToClipboard('out-caption')">Copy</button></h4>
-<div class="result-content" id="out-caption"></div>
-</div>
+                        <div class="result-box">
+                            <h4>TikTok / Video Concept <button class="copy-btn" onclick="copyToClipboard('out-idea')">Copy</button></h4>
+                            <div class="result-content" id="out-idea"></div>
+                        </div>
 
-<div class="result-box">
-<h4>TikTok / Video Concept <button class="copy-btn" onclick="copyToClipboard('out-idea')">Copy</button></h4>
-<div class="result-content" id="out-idea"></div>
-</div>
+                        <div class="result-box">
+                            <h4>Short Video Script <button class="copy-btn" onclick="copyToClipboard('out-script')">Copy</button></h4>
+                            <div class="result-content" id="out-script"></div>
+                        </div>
 
-<div class="result-box">
-<h4>Short Video Script <button class="copy-btn" onclick="copyToClipboard('out-script')">Copy</button></h4>
-<div class="result-content" id="out-script"></div>
-</div>
+                        <div class="result-box">
+                            <h4>Recommended Hashtags <button class="copy-btn" onclick="copyToClipboard('out-hashtags')">Copy</button></h4>
+                            <div class="result-content" id="out-hashtags" style="color: var(--primary-purple); font-weight: 500;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="result-box">
-<h4>Recommended Hashtags <button class="copy-btn" onclick="copyToClipboard('out-hashtags')">Copy</button></h4>
-<div class="result-content" id="out-hashtags" style="color: var(--primary-purple); font-weight: 500;"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+    <!-- PRICING SECTION -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Choose the right plan to fuel your business growth.</p>
+            </div>
+            <div class="pricing-grid">
+                <!-- FREE -->
+                <div class="pricing-card">
+                    <h3>FREE</h3>
+                    <div class="price">€0<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>5 AI generations per month</li>
+                        <li>Basic social media captions</li>
+                        <li>Standard video ideas</li>
+                        <li>1 user profile</li>
+                    </ul>
+                    <a href="#generator" class="btn btn-secondary" style="width: 100%;">Get Started</a>
+                </div>
+                <!-- PRO -->
+                <div class="pricing-card popular">
+                    <div class="badge">Most Popular</div>
+                    <h3>PRO</h3>
+                    <div class="price">€9.99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited AI generations</li>
+                        <li>Advanced Scripts & Hooks</li>
+                        <li>Custom Brand Tones</li>
+                        <li>All Social Platforms</li>
+                        <li>Priority generation speed</li>
+                    </ul>
+                    <a href="#generator" class="btn btn-primary" style="width: 100%;">Upgrade to Pro</a>
+                </div>
+                <!-- BUSINESS -->
+                <div class="pricing-card">
+                    <h3>BUSINESS</h3>
+                    <div class="price">€19.99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Everything in Pro</li>
+                        <li>Multi-business management</li>
+                        <li>Automated content scheduler</li>
+                        <li>Dedicated Account Support</li>
+                    </ul>
+                    <a href="#generator" class="btn btn-secondary" style="width: 100%;">Get Business</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="pricing" id="pricing">
-<div class="container">
-<div class="section-title">
-<h2>Simple, Transparent Pricing</h2>
-<p>Choose the right plan to fuel your business growth.</p>
-</div>
-<div class="pricing-grid">
-<div class="pricing-card">
-<h3>FREE</h3>
-<div class="price">€0<span>/month</span></div>
-<ul class="pricing-features">
-<li>5 AI generations per month</li>
-<li>Basic social media captions</li>
-<li>Standard video ideas</li>
-<li>1 user profile</li>
-</ul>
-<a href="#generator" class="btn btn-secondary" style="width: 100%;">Get Started</a>
-</div>
-<div class="pricing-card popular">
-<div class="badge">Most Popular</div>
-<h3>PRO</h3>
-<div class="price">€9.99<span>/month</span></div>
-<ul class="pricing-features">
-<li>Unlimited AI generations</li>
-<li>Advanced Scripts & Hooks</li>
-<li>Custom Brand Tones</li>
-<li>All Social Platforms</li>
-<li>Priority generation speed</li>
-</ul>
-<a href="#generator" class="btn btn-primary" style="width: 100%;">Upgrade to Pro</a>
-</div>
-<div class="pricing-card">
-<h3>BUSINESS</h3>
-<div class="price">€19.99<span>/month</span></div>
-<ul class="pricing-features">
-<li>Everything in Pro</li>
-<li>Multi-business management</li>
-<li>Automated content scheduler</li>
-<li>Dedicated Account Support</li>
-</ul>
-<a href="#generator" class="btn btn-secondary" style="width: 100%;">Get Business</a>
-</div>
-</div>
-</div>
-</section>
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SocialAI. All rights reserved. Built for creators and businesses.</p>
+        </div>
+    </footer>
 
-<footer>
-<div class="container">
-<p>© 2026 SocialAI. All rights reserved. Built for creators and businesses.</p>
-</div>
-</footer>
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        document.getElementById('ai-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-<script>
-// Form submission handler
-function handleGenerate(event) {
-event.preventDefault();
+            const inputData = {
+                name: document.getElementById('businessName').value,
+                type: document.getElementById('businessType').value,
+                location: document.getElementById('location').value,
+                platform: document.getElementById('platform').value,
+                description: document.getElementById('description').value,
+                audience: document.getElementById('audience').value,
+                tone: document.getElementById('tone').value
+            };
 
-// Collect form inputs
-const inputData = {
-name: document.getElementById('businessName').value,
-type: document.getElementById('businessType').value,
-location: document.getElementById('location').value,
-platform: document.getElementById('platform').value,
-description: document.getElementById('description').value,
-audience: document.getElementById('audience').value,
-tone: document.getElementById('tone').value
-};
+            const placeholder = document.getElementById('placeholder-text');
+            const spinner = document.getElementById('loading-spinner');
+            const outputContainer = document.getElementById('output-container');
 
-// UI Elements
-const placeholder = document.getElementById('placeholder-text');
-const spinner = document.getElementById('loading-spinner');
-const outputContainer = document.getElementById('output-container');
+            placeholder.style.display = 'none';
+            outputContainer.style.display = 'none';
+            spinner.style.display = 'block';
 
-// Set loading state
-placeholder.style.display = 'none';
-outputContainer.style.display = 'none';
-spinner.style.display = 'block';
+            try {
+                const results = await generateAIContent(inputData);
 
-// Call AI Generation function (Simulated async call)
-generateAIContent(inputData).then(results => {
-// Populate results into output boxes
-document.getElementById('out-caption').innerText = results.caption;
-document.getElementById('out-idea').innerText = results.idea;
-document.getElementById('out-script').innerText = results.script;
-document.getElementById('out-hashtags').innerText = results.hashtags;
+                if (!results || results.error) {
+                    alert('Error: ' + (results?.error || 'Something went wrong. Check your API key on Vercel.'));
+                    spinner.style.display = 'none';
+                    placeholder.style.display = 'block';
+                    return;
+                }
 
-// Display output
-spinner.style.display = 'none';
-outputContainer.style.display = 'flex';
-});
-}
+                document.getElementById('out-caption').innerText = results.caption || '';
+                document.getElementById('out-idea').innerText = results.idea || '';
+                document.getElementById('out-script').innerText = results.script || '';
+                document.getElementById('out-hashtags').innerText = results.hashtags || '';
 
-/*
-* SEPARATED AI GENERATION FUNCTION
-* ----------------------------------------------------
-* For production, replace this mock function with an fetch call
-* to your backend endpoint (e.g. /api/generate) which calls OpenAI/Gemini safely.
-*/
-async function generateAIContent(data) {
-// Simulates network latency (1.2 seconds)
-await new Promise(resolve => setTimeout(resolve, 1200));
+                spinner.style.display = 'none';
+                outputContainer.style.display = 'flex';
+            } catch (err) {
+                alert('Could not reach backend API. If testing locally on phone, backend server needs to be live.');
+                console.error(err);
+                spinner.style.display = 'none';
+                placeholder.style.display = 'block';
+            }
+        });
 
-// Return mock response based on user inputs
-return {
-caption: Ready to transform your experience? At ${data.name}, located right here in ${data.location}, we're redefining what it means to get top-quality ${data.type}. \n\nWhether you're looking for real solutions or just starting out, our tailored approach for ${data.audience} has you covered. Drop a comment below or tap the link in our bio to learn more! 🚀,
+        // Calls Vercel API endpoint
+        async function generateAIContent(data) {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-idea: SHOW, DON'T TELL: A fast-paced 15-second video demonstrating the #1 mistake ${data.audience} makes with ${data.type}, followed by how ${data.name} solves it effortlessly. Use a trending audio background on ${data.platform}.,
+            return await response.json();
+        }
 
-script: [0:00 - 0:03] HOOK (Text on screen + Voiceover): "If you live in ${data.location} and care about ${data.type}, stop scrolling!"\n\n[0:03 - 0:08] PROBLEM: Quick montage showing common pain points faced by ${data.audience}.\n\n[0:08 - 0:15] SOLUTION: Show ${data.name} in action with a ${data.tone.toLowerCase()} vibe. "Check out our page today to get started!"`,
-
-hashtags: #${data.name.replace(/\s+/g, '')} #latex
-{data.type.replace(/\s+/g, '')} #
-
-{data.location.replace(/\s+/g, '')}Biz #latex
-{data.platform}Marketing #SmallBusinessSuccess #Target
-
-{data.audience.replace(/\s+/g, '').slice(0, 10)}`
-};
-}
-
-// Utility to copy result content to clipboard
-function copyToClipboard(elementId) {
-const text = document.getElementById(elementId).innerText;
-navigator.clipboard.writeText(text).then(() => {
-alert('Copied to clipboard!');
-}).catch(err => {
-console.error('Failed to copy text: ', err);
-});
-}
-</script>
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
