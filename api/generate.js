@@ -6,36 +6,40 @@ export default async function handler(req, res) {
     const { name, type, location, platform, description, audience, tone } = req.body;
 
     const prompt = `
-    Generate social media content for:
-    - Name: ${name}
+    You are an expert social media manager. Generate marketing content for:
+    - Business Name: ${name}
     - Type: ${type}
     - Location: ${location}
     - Platform: ${platform}
     - Description: ${description}
-    - Audience: ${audience}
+    - Target Audience: ${audience}
     - Tone: ${tone}
 
-    Respond strictly in JSON with keys: "caption", "idea", "script", "hashtags".
+    Respond strictly in raw JSON format (no markdown formatting, no code blocks) with the exact keys: "caption", "idea", "script", "hashtags".
     `;
 
     try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const apiKey = process.env.GEMINI_API_KEY;
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: 'gpt-4o-mini',
-                messages: [{ role: 'user', content: prompt }],
-                response_format: { type: 'json_object' }
+                contents: [{ parts: [{ text: prompt }] }]
             })
         });
 
         const data = await response.json();
-        const result = JSON.parse(data.choices[0].message.content);
+        
+        if (data.error) {
+            return res.status(500).json({ error: data.error.message });
+        }
+
+        const rawText = data.candidates[0].content.parts[0].text;
+        const cleanJson = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+        const result = JSON.parse(cleanJson);
+
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to generate content' });
+        res.status(500).json({ error: 'Failed to generate content: ' + error.message });
     }
 }
